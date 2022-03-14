@@ -1,13 +1,15 @@
 * {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
   font-family: "Noto Sans KR", sans-serif;
-
-  &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
-  }
+}
+*::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera*/
 }
 
 body {
@@ -65,11 +67,10 @@ body {
   color: white;
   font-weight: bold;
   width: 10%;
-
-  &:hover {
-    background-color: lightskyblue;
-    transition: 300ms ease-in;
-  }
+}
+.input__icon:hover {
+  background-color: lightskyblue;
+  transition: 300ms ease-in;
 }
 
 .todoList__main {
@@ -90,13 +91,11 @@ body {
 .trash {
   padding: 20px;
   cursor: pointer;
-
-  &:hover {
-    background-color: red;
-    color: white;
-
-    transition: 300ms ease-in;
-  }
+}
+.trash:hover {
+  background-color: red;
+  color: white;
+  transition: 300ms ease-in;
 }
 
 .todoList__foot {
@@ -122,9 +121,8 @@ body {
   border: none;
   color: white;
   cursor: pointer;
-
-  &:hover {
-    background-color: lightskyblue;
-    transition: 300ms ease-in;
-  }
 }
+.todoList__foot__clearbtn:hover {
+  background-color: lightskyblue;
+  transition: 300ms ease-in;
+}/*# sourceMappingURL=style.css.map */
