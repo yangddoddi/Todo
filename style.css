@@ -12,6 +12,11 @@
   /* Chrome, Safari, Opera*/
 }
 
+button {
+  outline: none;
+  border: none;
+}
+
 body {
   margin: 0px;
   height: 100vh;

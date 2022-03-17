@@ -6,20 +6,18 @@ todoTask.innerHTML = `You have ${todoList.childElementCount} pending tasks`;
 const addBtn = document.querySelector(".input__icon");
 const clearAllBtn = document.querySelector(".todoList__foot__clearbtn");
 
+let idCount = 0;
+
 function addToDo(text) {
   const todoItem = document.createElement("div");
-  const todoItemText = document.createElement("p");
-  const deleteBtn = document.createElement("i");
   todoItem.className = "todoList__main__item";
-  todoItemText.className = "todoList__main__item--text";
-  deleteBtn.className = "fa-solid fa-trash-can trash";
-  deleteBtn.addEventListener("click", () => {
-    todoList.removeChild(todoItem);
-    ChangeTaskNum();
-  });
-  todoItem.append(todoItemText, deleteBtn);
+  todoItem.dataset.id = `${idCount}`;
+  todoItem.innerHTML = `<p class="todoList__main__item--text">${text}</p>
+  <button class="trash deleteBtn" data-id=${idCount}>
+      <i class="trash fa-solid fa-trash-can" data-id=${idCount}></i>
+  </button>`;
   todoList.append(todoItem);
-  todoItemText.textContent = text;
+  idCount++;
   todoList.scrollTo(0, todoList.lastChild.getBoundingClientRect().y);
 }
 
@@ -38,7 +36,22 @@ function handleInput(e) {
 
 textInput.addEventListener("change", handleInput);
 
-clearAllBtn.addEventListener("click", () => {
+todoList.addEventListener("click", (event) => {
+  let tagName = event.target.tagName;
+  let targetCount = event.target.dataset.id;
+
+  let data = event.target.dataset;
+  if (tagName !== "BUTTON" && tagName !== "I") {
+    return;
+  } else {
+    let todoItem = document.querySelector(
+      `.todoList__main__item[data-id="${targetCount}"]`
+    );
+    todoItem.remove();
+  }
+});
+
+clearAllBtn.addEventListener("click", (event) => {
   while (todoList.hasChildNodes()) {
     todoList.removeChild(todoList.firstChild);
   }
