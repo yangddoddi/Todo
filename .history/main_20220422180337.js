@@ -10,7 +10,7 @@ const clearAllBtn = document.querySelector(".todoList__foot__clearBtn");
 inputForm.addEventListener("submit", handleSubmit);
 clearAllBtn.addEventListener("click", clickClearAll);
 
-let todoArr = [];
+const todoArr = [];
 const storageItems = JSON.parse(localStorage.getItem("todoItems"));
 
 if (storageItems) {
@@ -20,10 +20,12 @@ if (storageItems) {
   });
 }
 
+console.log(storageItems);
+
 function addToDo(newTodoItem) {
   const todoItem = document.createElement("div");
   todoItem.setAttribute("class", "todoList__main__item");
-  todoItem.setAttribute("id", `${newTodoItem.id}`);
+  todoItem.setAttribute("data-id", `${newTodoItem.id}`);
 
   const item = document.createElement("p");
   item.setAttribute("class", "todoList__main__item--text");
@@ -49,28 +51,26 @@ function handleSubmit(e) {
   e.preventDefault();
   console.log(textInput.value);
   if (textInput.value == "") {
-    return false;
+    return;
   }
   const newTodoItem = {
     id: Date.now(),
     text: textInput.value,
   };
+  addToDo(newTodoItem);
   todoArr.push(newTodoItem);
   localStorage.setItem("todoItems", JSON.stringify(todoArr));
-
-  addToDo(newTodoItem);
-
   ChangeTaskNum();
   textInput.value = " ";
 }
 
 function deleteHandler(todoItem, e) {
-  let targetId = e.target.parentElement.id;
-  console.log(targetId);
+  let targetId = e.target.parentElement.dataset.id;
   todoList.removeChild(todoItem);
 
-  todoArr = todoArr.filter((todo) => todo.id !== parseInt(targetId));
-  console.log(todoArr);
+  todoArr = todoArr.filter((todo) => {
+    todo.id !== targetId;
+  });
   localStorage.setItem("todoItems", JSON.stringify(todoArr));
 }
 

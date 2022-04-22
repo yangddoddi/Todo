@@ -48,7 +48,7 @@ body {
   margin-top: 10px;
 }
 
-.inputForm {
+.inputContianer {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -64,8 +64,8 @@ body {
   font-size: 16px;
 }
 
-.input__btn {
-  display:inline-block;
+.input__icon {
+  display: inline-block;
   font-size: 23px;
   height: 100%;
   line-height: 27px;

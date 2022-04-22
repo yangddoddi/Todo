@@ -49,17 +49,16 @@ function handleSubmit(e) {
   e.preventDefault();
   console.log(textInput.value);
   if (textInput.value == "") {
-    return false;
+    return;
   }
   const newTodoItem = {
     id: Date.now(),
     text: textInput.value,
   };
-  todoArr.push(newTodoItem);
-  localStorage.setItem("todoItems", JSON.stringify(todoArr));
-
   addToDo(newTodoItem);
-
+  todoArr.push(newTodoItem);
+  console.log(todoArr);
+  localStorage.setItem("todoItems", JSON.stringify(todoArr));
   ChangeTaskNum();
   textInput.value = " ";
 }
@@ -69,7 +68,10 @@ function deleteHandler(todoItem, e) {
   console.log(targetId);
   todoList.removeChild(todoItem);
 
-  todoArr = todoArr.filter((todo) => todo.id !== parseInt(targetId));
+  todoArr = todoArr.filter((todo) => {
+    console.log(todo.id !== targetId);
+    todo.id !== targetId;
+  });
   console.log(todoArr);
   localStorage.setItem("todoItems", JSON.stringify(todoArr));
 }

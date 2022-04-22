@@ -10,15 +10,16 @@ const clearAllBtn = document.querySelector(".todoList__foot__clearBtn");
 inputForm.addEventListener("submit", handleSubmit);
 clearAllBtn.addEventListener("click", clickClearAll);
 
-let todoArr = [];
+const todoArr = [];
 const storageItems = JSON.parse(localStorage.getItem("todoItems"));
 
 if (storageItems) {
   storageItems.forEach((e) => {
     addToDo(e);
-    todoArr.push(e);
   });
 }
+
+console.log(storageItems);
 
 function addToDo(newTodoItem) {
   const todoItem = document.createElement("div");
@@ -49,29 +50,22 @@ function handleSubmit(e) {
   e.preventDefault();
   console.log(textInput.value);
   if (textInput.value == "") {
-    return false;
+    return;
   }
   const newTodoItem = {
     id: Date.now(),
     text: textInput.value,
   };
+  addToDo(newTodoItem);
   todoArr.push(newTodoItem);
   localStorage.setItem("todoItems", JSON.stringify(todoArr));
-
-  addToDo(newTodoItem);
-
   ChangeTaskNum();
   textInput.value = " ";
 }
 
 function deleteHandler(todoItem, e) {
-  let targetId = e.target.parentElement.id;
-  console.log(targetId);
   todoList.removeChild(todoItem);
-
-  todoArr = todoArr.filter((todo) => todo.id !== parseInt(targetId));
-  console.log(todoArr);
-  localStorage.setItem("todoItems", JSON.stringify(todoArr));
+  console.log(e.target.parentElemet.id);
 }
 
 function clickClearAll() {

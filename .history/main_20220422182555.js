@@ -20,7 +20,7 @@ if (storageItems) {
   });
 }
 
-function addToDo(newTodoItem) {
+function addToDo() {
   const todoItem = document.createElement("div");
   todoItem.setAttribute("class", "todoList__main__item");
   todoItem.setAttribute("id", `${newTodoItem.id}`);
@@ -49,7 +49,7 @@ function handleSubmit(e) {
   e.preventDefault();
   console.log(textInput.value);
   if (textInput.value == "") {
-    return false;
+    return;
   }
   const newTodoItem = {
     id: Date.now(),
@@ -59,7 +59,6 @@ function handleSubmit(e) {
   localStorage.setItem("todoItems", JSON.stringify(todoArr));
 
   addToDo(newTodoItem);
-
   ChangeTaskNum();
   textInput.value = " ";
 }

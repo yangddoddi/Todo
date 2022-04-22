@@ -10,20 +10,21 @@ const clearAllBtn = document.querySelector(".todoList__foot__clearBtn");
 inputForm.addEventListener("submit", handleSubmit);
 clearAllBtn.addEventListener("click", clickClearAll);
 
-let todoArr = [];
+const todoArr = [];
 const storageItems = JSON.parse(localStorage.getItem("todoItems"));
 
 if (storageItems) {
   storageItems.forEach((e) => {
     addToDo(e);
-    todoArr.push(e);
   });
 }
+
+console.log(storageItems);
 
 function addToDo(newTodoItem) {
   const todoItem = document.createElement("div");
   todoItem.setAttribute("class", "todoList__main__item");
-  todoItem.setAttribute("id", `${newTodoItem.id}`);
+  todoItem.setAttribute("dataset-id", `${newTodoItem.id}`);
 
   const item = document.createElement("p");
   item.setAttribute("class", "todoList__main__item--text");
@@ -31,8 +32,8 @@ function addToDo(newTodoItem) {
 
   const button = document.createElement("button");
   button.setAttribute("class", "trash deleteBtn fa-solid fa-trash-can");
-  button.addEventListener("click", (e) => {
-    deleteHandler(todoItem, e);
+  button.addEventListener("click", () => {
+    todoList.removeChild(todoItem);
   });
 
   todoItem.append(item);
@@ -49,29 +50,33 @@ function handleSubmit(e) {
   e.preventDefault();
   console.log(textInput.value);
   if (textInput.value == "") {
-    return false;
+    return;
   }
   const newTodoItem = {
     id: Date.now(),
     text: textInput.value,
   };
+  addToDo(newTodoItem);
   todoArr.push(newTodoItem);
   localStorage.setItem("todoItems", JSON.stringify(todoArr));
-
-  addToDo(newTodoItem);
-
   ChangeTaskNum();
   textInput.value = " ";
 }
 
-function deleteHandler(todoItem, e) {
-  let targetId = e.target.parentElement.id;
-  console.log(targetId);
-  todoList.removeChild(todoItem);
+function deleteHandler(event) {
+  if (event.target.className !== "trash") {
+    return;
+  }
+  event.target.parentElement.remove();
+  // target.remove();
+  // console.log(event.target.dataset.id);
 
-  todoArr = todoArr.filter((todo) => todo.id !== parseInt(targetId));
-  console.log(todoArr);
-  localStorage.setItem("todoItems", JSON.stringify(todoArr));
+  // } else {
+  //   let todoItem = document.querySelector(
+  //     `.todoList__main__item[data-id="${targetCount}"]`
+  //   );
+  //   console.log(todoItem);
+  //   todoItem.remove();
 }
 
 function clickClearAll() {

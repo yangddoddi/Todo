@@ -20,7 +20,12 @@ if (storageItems) {
   });
 }
 
-function addToDo(newTodoItem) {
+function addToDo() {
+  const newTodoItem = {
+    id: Date.now(),
+    text: textInput.value,
+  };
+
   const todoItem = document.createElement("div");
   todoItem.setAttribute("class", "todoList__main__item");
   todoItem.setAttribute("id", `${newTodoItem.id}`);
@@ -49,17 +54,13 @@ function handleSubmit(e) {
   e.preventDefault();
   console.log(textInput.value);
   if (textInput.value == "") {
-    return false;
+    return;
   }
-  const newTodoItem = {
-    id: Date.now(),
-    text: textInput.value,
-  };
+
+  addToDo();
   todoArr.push(newTodoItem);
+  console.log(todoArr);
   localStorage.setItem("todoItems", JSON.stringify(todoArr));
-
-  addToDo(newTodoItem);
-
   ChangeTaskNum();
   textInput.value = " ";
 }
@@ -69,7 +70,10 @@ function deleteHandler(todoItem, e) {
   console.log(targetId);
   todoList.removeChild(todoItem);
 
-  todoArr = todoArr.filter((todo) => todo.id !== parseInt(targetId));
+  todoArr = todoArr.filter((todo) => {
+    console.log(todo.id !== targetId);
+    todo.id !== targetId;
+  });
   console.log(todoArr);
   localStorage.setItem("todoItems", JSON.stringify(todoArr));
 }
